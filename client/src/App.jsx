@@ -7,13 +7,7 @@ function App() {
   const [conversations, setConversations] = useState([
     {
       user: "gpt",
-      answer:
-        "You can also use variant modifiers to target media queries like responsive breakpoints",
-    },
-    {
-      user: "user",
-      answer:
-        "You can also use variant modifiers to target media queries like responsive breakpoints",
+      answer: "Ask any question.",
     },
   ]);
   const scrollToBottom = () => {
