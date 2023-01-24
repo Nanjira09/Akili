@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useRef, useState } from "react";
+import { BeatLoader } from "react-spinners";
 
 function App() {
   const [question, setQuestion] = useState("");
+  const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
   const [conversations, setConversations] = useState([
     {
@@ -20,7 +22,9 @@ function App() {
     const data = { message: question };
     setConversations((prev) => [...prev, { user: "user", answer: question }]);
 
-    fetch("http://localhost:3000/chat", {
+    setQuestion("");
+    setLoading(true);
+    fetch("https://akili.onrender.com/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,11 +37,11 @@ function App() {
           ...prev,
           { user: "gpt", answer: data.message },
         ]);
-
-        setQuestion("");
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error:", error);
+        setLoading(false);
       });
   };
   return (
@@ -67,6 +71,7 @@ function App() {
               </div>
             </div>
           ))}
+          <BeatLoader color="black" loading={loading} />
           <div ref={messagesEndRef} />
         </div>
         <div className="flex items-center w-4/5 bg-white rounded-2xl mx-auto px-2 py-1">
